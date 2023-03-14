@@ -1,12 +1,18 @@
 package ru.itis.algorithms_201_1.ponomarev;
 
 public class SortingStats {
+    final private int dataSize;
     final private long nanoTimeTaken;
     final private long iterationsCount;
 
-    public SortingStats(long nanoTimeTaken, long iterationsCount) {
+    public SortingStats(int dataSize, long nanoTimeTaken, long iterationsCount) {
+        this.dataSize = dataSize;
         this.nanoTimeTaken = nanoTimeTaken;
         this.iterationsCount = iterationsCount;
+    }
+
+    public int getDataSize() {
+        return dataSize;
     }
 
     public long getNanoTimeTaken() {
@@ -20,7 +26,8 @@ public class SortingStats {
     @Override
     public String toString() {
         return "SortingStats{" +
-                "nanoTimeTaken=" + nanoTimeTaken +
+                "dataSize=" + dataSize +
+                ", nanoTimeTaken=" + nanoTimeTaken +
                 ", iterationsCount=" + iterationsCount +
                 '}';
     }

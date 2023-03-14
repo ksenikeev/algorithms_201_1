@@ -39,7 +39,7 @@ public class ShellSorter {
         }
 
         long timeTaken = System.nanoTime() - timeStart;
-        return new SortingStats(timeTaken, iterations);
+        return new SortingStats(arr.length, timeTaken, iterations);
     }
 
     private static class GapIterator implements Iterator<Integer> {
