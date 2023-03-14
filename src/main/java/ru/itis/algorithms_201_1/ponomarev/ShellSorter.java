@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -15,12 +14,16 @@ public class ShellSorter {
                 .mapToInt(Integer::parseInt)
                 .toArray();
 
-        sort(arr);
-        System.out.println(Arrays.toString(arr));
+        SortingStats stats = sort(arr);
+        System.out.println(stats);
     }
 
-    public static void sort(int[] arr) {
+    public static SortingStats sort(int[] arr) {
         Iterator<Integer> gapIter = new GapIterator(arr.length);
+
+        long iterations = 0;
+        long timeStart = System.nanoTime();
+
         while (gapIter.hasNext()) {
             int d = gapIter.next();
             int j;
@@ -30,8 +33,13 @@ public class ShellSorter {
                     arr[j] = arr[j-d];
                 }
                 arr[j] = swap;
+
+                iterations++;
             }
         }
+
+        long timeTaken = System.nanoTime() - timeStart;
+        return new SortingStats(timeTaken, iterations);
     }
 
     private static class GapIterator implements Iterator<Integer> {
