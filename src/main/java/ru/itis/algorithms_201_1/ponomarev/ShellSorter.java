@@ -1,24 +1,20 @@
 package ru.itis.algorithms_201_1.ponomarev;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Provides sort method, which uses Shell Sort algorithm.
+ */
 public class ShellSorter {
-    public static void main(String[] args) throws IOException {
-        Path p = Paths.get("C:\\Users\\ipono\\IdeaProjects\\algorithms_201_1\\src\\main\\java\\ru\\itis\\algorithms_201_1\\ponomarev\\res\\input_001");
-        int[] arr = Files.lines(p)
-                .mapToInt(Integer::parseInt)
-                .toArray();
+    private SortingStats sortingStats;
 
-        SortingStats stats = sort(arr);
-        System.out.println(stats);
-    }
-
-    public static SortingStats sort(int[] arr) {
+    /**
+     * Sorts provided array in natural order.<br>
+     * @implNote This implementation uses Shell Sort with Shell's original gap iterator, which provides <code>O(n^2)</code> time complexity.
+     * @param arr an array to sort.
+     */
+    public void sort(int[] arr) {
         Iterator<Integer> gapIter = new GapIterator(arr.length);
 
         long iterations = 0;
@@ -39,7 +35,15 @@ public class ShellSorter {
         }
 
         long timeTaken = System.nanoTime() - timeStart;
-        return new SortingStats(arr.length, timeTaken, iterations);
+        sortingStats = new SortingStats(arr.length, timeTaken, iterations);
+    }
+
+    /**
+     * Returns stats of previous sorting.
+     * @return stats of previous sorting; if {@link #sort(int[])} wasn't called yet, returns null.
+     */
+    public SortingStats getSortingStats() {
+        return sortingStats;
     }
 
     private static class GapIterator implements Iterator<Integer> {

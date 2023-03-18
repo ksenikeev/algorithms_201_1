@@ -23,6 +23,10 @@ public class SortingStats {
         return iterationsCount;
     }
 
+    public String toCSVString() {
+        return String.join(",", dataSize + "", nanoTimeTaken + "", iterationsCount + "");
+    }
+
     @Override
     public String toString() {
         return "SortingStats{" +
