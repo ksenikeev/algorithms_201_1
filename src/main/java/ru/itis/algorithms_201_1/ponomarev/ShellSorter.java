@@ -27,10 +27,9 @@ public class ShellSorter {
                 int swap = arr[i];
                 for (j = i; j > 0 && swap < arr[j-d]; j -= d) {
                     arr[j] = arr[j-d];
+                    iterations++;
                 }
                 arr[j] = swap;
-
-                iterations++;
             }
         }
 
