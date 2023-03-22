@@ -17,7 +17,7 @@ public class App {
 
         for (int i = 1; i <= 100; i++) {
             String number = String.format("%1$3s", i + "").replace(' ', '0'); // left pad with zeros
-            Path path = Paths.get("C:\\Users\\ipono\\IdeaProjects\\algorithms_201_1\\src\\main\\java\\ru\\itis\\algorithms_201_1\\ponomarev\\res\\input_" + number);
+            Path path = Paths.get("src/main/java/ru/itis/algorithms_201_1/ponomarev/res/input_" + number);
 
             // run sort on one input 30 times and save stats with minimum time
             SortingStats stats = null;
@@ -36,7 +36,7 @@ public class App {
         }
 
         // write to csv
-        Path statsPath = Paths.get("C:\\Users\\ipono\\IdeaProjects\\algorithms_201_1\\src\\main\\java\\ru\\itis\\algorithms_201_1\\ponomarev\\res\\output.csv");
+        Path statsPath = Paths.get("src/main/java/ru/itis/algorithms_201_1/ponomarev/res/output.csv");
         Files.write(statsPath, csvLines);
     }
 }
