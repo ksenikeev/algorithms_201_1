@@ -1,9 +1,9 @@
 package ru.itis.algorithms_201_1.lobanov;
 
 public class Edge implements Comparable<Edge> {
-    private int node1;
-    private int node2;
-    private int weight;
+    private final int node1;
+    private final int node2;
+    private final int weight;
 
     public Edge(int node1, int node2, int weight) {
         this.node1 = node1;

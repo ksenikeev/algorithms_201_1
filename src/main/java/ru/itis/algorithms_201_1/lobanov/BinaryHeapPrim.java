@@ -1,21 +1,20 @@
 package ru.itis.algorithms_201_1.lobanov;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class BinaryHeapPrim {
-    private final int[][] G;
-    private final int numOfV;
-    private int[][] MST;
+public class BinaryHeapPrim extends PrimAlgorithm {
+    private final List<Edge>[] adjacencyList;
     private final Random random;
+    private final Measurement binaryHeapPrimMeasurement;
 
-    public BinaryHeapPrim(int[][] G) {
-        this.G = G;
-        this.numOfV = G.length;
+    public BinaryHeapPrim(ArrayList<Edge>[] adjacencyList, Measurement binaryHeapPrimMeasurement) {
+        this.adjacencyList = adjacencyList;
+        super.numOfV = adjacencyList.length;
         this.random = new Random();
-        MST = buildMST();
+        this.binaryHeapPrimMeasurement = binaryHeapPrimMeasurement;
+        super.MST = buildMST();
     }
 
     private int[][] buildMST() {
@@ -24,33 +23,34 @@ public class BinaryHeapPrim {
         int node = random.nextInt(numOfV);
         selectedNodes[node] = true;
         BinaryHeap<Edge> binaryHeap = new BinaryHeap<>();
-        BinaryHeap<Edge> bh = new BinaryHeap<>();
 
-        for (int i = 0; i < numOfV; i++) {
-            if (G[node][i] != 0) {
-                binaryHeap.add(new Edge(node, i, G[node][i]));
-                bh.add(new Edge(node, i, G[node][i]));
-            }
+        binaryHeapPrimMeasurement.startMeasurement();
+        List<Edge> listOfFirstNode = adjacencyList[node];
+        for (Edge edge : listOfFirstNode) {
+            binaryHeapPrimMeasurement.addIteration();
+            binaryHeap.add(edge);
         }
         List<Edge> list = new ArrayList<>();
         while (!binaryHeap.isEmpty()) {
             Edge edge = binaryHeap.peek();
             list.add(edge);
             int node2 = edge.getNode2();
-            for (int i = 0; i < numOfV; i++) {
-                if (G[node2][i] != 0) {
-                    if (!selectedNodes[i]) {
-                        binaryHeap.add(new Edge(node2, i, G[node2][i]));
-                    } else {
-                        binaryHeap.remove(new Edge(node2, i, G[node2][i]));
-                    }
+            List<Edge> arrayList = adjacencyList[node2];
+            for (Edge e : arrayList) {
+                binaryHeapPrimMeasurement.addIteration();
+                if (!selectedNodes[e.getNode2()]) {
+                    binaryHeap.add(e);
+                } else {
+                    binaryHeap.remove(e);
                 }
             }
             selectedNodes[node2] = true;
         }
+        int iterations =  binaryHeap.getCountOfIterations();
+        binaryHeapPrimMeasurement.addIteration(iterations);
+        binaryHeapPrimMeasurement.stopMeasurement();
 
-        for (int i = 0; i < list.size(); i++) {
-            Edge edge = list.get(i);
+        for (Edge edge : list) {
             int node1 = edge.getNode1();
             int node2 = edge.getNode2();
             int weight = edge.getWeight();
@@ -59,51 +59,7 @@ public class BinaryHeapPrim {
         return MST;
     }
 
-    public void printMST() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("First Node - Second Node : Edge's Weight\n");
-        for (int u = 0; u < numOfV; u++) {
-            for (int v = 0; v < numOfV; v++) {
-                int edge = MST[u][v];
-                if (edge != 0) {
-                    sb.append(u);
-                    sb.append(" - ");
-                    sb.append(v);
-                    sb.append(" : ");
-                    sb.append(edge);
-                    sb.append("\n");
-                }
-            }
-        }
-        System.out.println(sb);
-    }
-
-    public void printMSTMatrix() {
-        buildMSTMatrix(MST);
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < numOfV; i++) {
-            sb.append(Arrays.toString(MST[i]));
-            sb.append("\n");
-        }
-        System.out.println(sb);
-    }
-
-    private void buildMSTMatrix(int[][] MST) {
-        for (int u = 0; u < numOfV; u++) {
-            for (int v = 0; v < numOfV; v++) {
-                if (MST[u][v] != 0) {
-                    if (MST[v][u] == 0) {
-                        MST[v][u] = MST[u][v];
-                    }
-                }
-            }
-        }
-    }
-
-    private boolean isUncheckedNode(boolean[] selectedNodes) {
-        for (int i = 0; i < numOfV; i++) {
-            if (!selectedNodes[i]) return true;
-        }
-        return false;
+    public Measurement getBinaryHeapPrimMeasurement() {
+        return binaryHeapPrimMeasurement;
     }
 }

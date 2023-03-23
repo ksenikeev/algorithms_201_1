@@ -1,48 +1,18 @@
 package ru.itis.algorithms_201_1.lobanov;
 
-import java.util.Arrays;
 import java.util.Random;
 
-public class AdjacencyMatrixPrim {
+public class AdjacencyMatrixPrim extends PrimAlgorithm {
     private final int[][] G;
-    private final int numOfV;
-    private int[][] MST;
     private final Random random;
+    private final Measurement adjacencyMatrixPrimMeasurement;
 
-    public AdjacencyMatrixPrim(int[][] G) {
+    public AdjacencyMatrixPrim(int[][] G, Measurement adjacencyMatrixPrimMeasurement) {
         this.G = G;
-        this.numOfV = G.length;
+        super.numOfV = G.length;
+        this.adjacencyMatrixPrimMeasurement = adjacencyMatrixPrimMeasurement;
         this.random = new Random();
-        MST = buildMST();
-    }
-
-    public void printMST() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("First Node - Second Node : Edge's Weight\n");
-        for (int u = 0; u < numOfV; u++) {
-            for (int v = 0; v < numOfV; v++) {
-                int edge = MST[u][v];
-                if (edge != 0) {
-                    sb.append(u);
-                    sb.append(" - ");
-                    sb.append(v);
-                    sb.append(" : ");
-                    sb.append(edge);
-                    sb.append("\n");
-                }
-            }
-        }
-        System.out.println(sb);
-    }
-
-    public void printMSTMatrix() {
-        buildMSTMatrix(MST);
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < numOfV; i++) {
-            sb.append(Arrays.toString(MST[i]));
-            sb.append("\n");
-        }
-        System.out.println(sb);
+        super.MST = buildMST();
     }
 
     private int[][] buildMST() {
@@ -54,13 +24,17 @@ public class AdjacencyMatrixPrim {
         selectedNodes[node] = true;
         int countOfEdges = 0;
 
+        adjacencyMatrixPrimMeasurement.startMeasurement();
         while (countOfEdges < numOfV - 1) {
+            adjacencyMatrixPrimMeasurement.addIteration();
             int minEdge = INFINITE;
             int U = 0;
             int V = 0;
             for (int u = 0; u < numOfV; u++) {
+                adjacencyMatrixPrimMeasurement.addIteration();
                 if (selectedNodes[u]) {
                     for (int v = 0; v < numOfV; v++) {
+                        adjacencyMatrixPrimMeasurement.addIteration();
                         if (!selectedNodes[v] && G[u][v] != 0) {
                             if (minEdge >= G[u][v]) {
                                 minEdge = G[u][v];
@@ -75,18 +49,11 @@ public class AdjacencyMatrixPrim {
             selectedNodes[V] = true;
             countOfEdges++;
         }
+        adjacencyMatrixPrimMeasurement.stopMeasurement();
         return MST;
     }
 
-    private void buildMSTMatrix(int[][] MST) {
-        for (int u = 0; u < numOfV; u++) {
-            for (int v = 0; v < numOfV; v++) {
-                if (MST[u][v] != 0) {
-                    if (MST[v][u] == 0) {
-                        MST[v][u] = MST[u][v];
-                    }
-                }
-            }
-        }
+    public Measurement getAdjacencyMatrixPrimMeasurement() {
+        return adjacencyMatrixPrimMeasurement;
     }
 }

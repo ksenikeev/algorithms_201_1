@@ -7,6 +7,7 @@ public class BinaryHeap<T> {
     private final double MULTIPLIER = 1.5;
     private Object[] heap;
     private int size = 0;
+    private int countOfIterations = 0;
 
     public BinaryHeap() {
         this.heap = new Object[INITIAL_CAPACITY];
@@ -55,6 +56,10 @@ public class BinaryHeap<T> {
         } else return false;
     }
 
+    public int getCountOfIterations() {
+        return countOfIterations;
+    }
+
     private T removeByIndex(int index) {
         int s = --size;
         if (s == index) heap[index] = null;
@@ -74,6 +79,7 @@ public class BinaryHeap<T> {
     private void swapUp(int i, T elem) {
         Comparable<? super T> element = (Comparable<? super T>) elem;
         while (i > 0) {
+            countOfIterations++;
             int parentIndex = (i - 1) / 2;
             Object parentElem = heap[parentIndex];
             if (element.compareTo((T) parentElem) >= 0) {
@@ -89,6 +95,7 @@ public class BinaryHeap<T> {
         Comparable<? super T> element = (Comparable<? super T>) elem;
         int half = size / 2;
         while (i < half) {
+            countOfIterations++;
             int child = 2 * i + 1;
             Object c = heap[child];
             int right = child + 1;
@@ -107,9 +114,11 @@ public class BinaryHeap<T> {
 
     private int indexOf(Object o) {
         if (o != null) {
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size; i++) {
+                countOfIterations++;
                 if (o.equals(heap[i]))
                     return i;
+            }
         }
         return -1;
     }
