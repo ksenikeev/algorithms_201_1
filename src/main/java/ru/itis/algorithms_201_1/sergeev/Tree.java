@@ -1,4 +1,4 @@
-package ru.kpfu.itis.algorithms_201_1.sergeev;
+package ru.itis.algorithms_201_1.sergeev;
 import java.util.ArrayList;
 
 public class Tree {
