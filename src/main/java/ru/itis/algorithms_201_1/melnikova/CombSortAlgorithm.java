@@ -1,7 +1,5 @@
 package ru.itis.algorithms_201_1.melnikova;
-
 public class CombSortAlgorithm {
-
     public static <T extends Comparable<? super T>> void combSort(T[] array){
         final double FACTOR = 1.2473;
         int gap  = array.length - 1;
