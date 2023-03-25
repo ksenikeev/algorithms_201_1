@@ -1,1 +1,1 @@
-to be updated
+<h1>Bucket Sort/Тимсорт</h1>
