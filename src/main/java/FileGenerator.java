@@ -19,7 +19,6 @@ public class FileGenerator {
                 Files.writeString(file, line, StandardOpenOption.APPEND);
             }
         } catch (IOException e) {
-            System.out.println("LOX");
         }
     }
 }
