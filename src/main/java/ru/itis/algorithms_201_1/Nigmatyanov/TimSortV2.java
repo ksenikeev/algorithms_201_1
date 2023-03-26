@@ -70,7 +70,6 @@ public class TimSortV2 {
         return rightCursor;
     }
     public void mergeTwoSubarrays(int[] arr, int firstSubarrayIndex, int firstSubarrayLength, int secondSubarrayIndex, int secondSubarrayLength) {
-        int[] tempArray = Arrays.copyOfRange(arr, firstSubarrayIndex, firstSubarrayIndex + firstSubarrayLength);
         int cursor1 = 0;
         int cursor2 = 0;
         int minIndex = Math.min(firstSubarrayIndex, secondSubarrayIndex);
@@ -97,6 +96,7 @@ public class TimSortV2 {
     }
     public void timSort(int[] arr) {
         ArrayList<int[]> runs = new ArrayList<>();
+        int[] tempArr = new int[arr.length];
         int arrLen = arr.length;
         int cursor = 0;
         int newRunBeginning = makeNewRun(arr, cursor);
@@ -107,6 +107,7 @@ public class TimSortV2 {
             runs.add(new int[]{cursor, newRunBeginning - cursor});
             while (runs.size() != 1 && runs.get(runs.size() - 1)[1] >= runs.get(runs.size() - 2)[1]
                             || ( runs.size() >= 3 && runs.get(runs.size() - 3)[1] <= runs.get(runs.size() - 1)[1] + runs.get(runs.size() - 2)[1])) {
+                tempArr = new int[arr.length];
                 if (runs.size() == 2){
                     mergeTwoSubarrays(arr, runs.get(0)[0], runs.get(0)[1], runs.get(1)[0], runs.get(1)[1]);
                     runs.get(0)[1] += runs.get(1)[1];
@@ -141,6 +142,7 @@ public class TimSortV2 {
             }
         }
         for (int i = runs.size() - 1; i > 0; i--){
+                tempArr = new int[arr.length];
                 mergeTwoSubarrays(arr, runs.get(i-1)[0], runs.get(i-1)[1], runs.get(i)[0], runs.get(i)[1]);
                 runs.get(i-1)[1] += runs.get(i)[1];
                 runs.remove(i);
