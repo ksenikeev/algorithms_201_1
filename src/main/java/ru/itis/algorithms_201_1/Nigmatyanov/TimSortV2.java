@@ -51,11 +51,11 @@ public class TimSortV2 {
         }
 
         if (arr[rightCursor] < arr[rightCursor + 1]) {
-            while (rightCursor < arrLen - 1 && arr[rightCursor] < arr[rightCursor + 1]) {
+            while (rightCursor < arrLen - 1 && arr[rightCursor] <= arr[rightCursor + 1]) {
                 rightCursor++;
             }
         } else {
-            while (rightCursor < arrLen - 1 && arr[rightCursor] >= arr[rightCursor + 1]) {
+            while (rightCursor < arrLen - 1 && arr[rightCursor] > arr[rightCursor + 1]) {
                 rightCursor++;
             }
             reversePartOfArray(arr, index, rightCursor);
