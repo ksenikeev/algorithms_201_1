@@ -20,6 +20,7 @@ public class BellmanFordAlgorithm {
             checkEdges(paths);
         }
     }
+
     private boolean hasNegativeCycle() {
         double[] pathsToCheck = Arrays.copyOf(paths, paths.length);
         checkEdges(pathsToCheck);
@@ -37,15 +38,12 @@ public class BellmanFordAlgorithm {
         }
     }
 
-    public void check(Integer[][] matrix, int source) {
+    public double[] getLengths(Integer[][] matrix, int source) throws NegativeCycleException{
         Graph graph = new Graph(matrix);
         this.graph = graph;
         createInitialMatrix(graph, source);
         getPaths();
-        if (hasNegativeCycle()) {
-            System.out.println("The graph has negative cycle.");
-            return;
-        }
-        System.out.println(Arrays.toString(paths));
+        if (hasNegativeCycle()) throw new NegativeCycleException("The graph has negative cycle.");
+        return paths;
     }
 }
