@@ -9,17 +9,17 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 public class KraskalAlgorithm {
-    public static void main(String[] args){
+    public static void main(String[] args){ //запуск алгоритма
         writeTestData();
         getResultData();
     }
-    public final static int AMOUNT_OF_TESTS = 100;
-    public final static int START_AMOUNT_OF_VERTICES = 50;
-    public final static int STEP = 5;
-    public static long timeOfExecutingNanoSeconds;
-    public static long iterations;
+    public final static int AMOUNT_OF_TESTS = 100; //количество генерируемых тестовых файлов 
+    public final static int START_AMOUNT_OF_VERTICES = 50; //начальное число вершин
+    public final static int STEP = 5; //шаг, с которым растет число вершин при генерации тестовых данных
+    public static long timeOfExecutingNanoSeconds; //время выполнения в нс
+    public static long iterations; //число итераций
 
-    public static SimpleWeighedGraph kraskalAlgorithm(SimpleWeighedGraph graph){
+    public static SimpleWeighedGraph kraskalAlgorithm(SimpleWeighedGraph graph){ //метод возвращает найденный остов 
 
         long start = System.nanoTime();
 
@@ -30,18 +30,18 @@ public class KraskalAlgorithm {
         SimpleWeighedGraph ostov = new SimpleWeighedGraph(n);
         boolean[] currVertices = new boolean[n];
 
-        MergeSort.mergeSort(graph.edges);
+        MergeSort.mergeSort(graph.edges); //сортируем ребра с помощью сортировки слиянием
 
-        while (m < n - 1 && i < graph.edges.size()){
-            if (!currVertices[graph.edges.get(i).inc1]){
-                currVertices[graph.edges.get(i).inc1] = true;
+        while (m < n - 1 && i < graph.edges.size()){ //цикл выполняется в лучшем случае n-1 раз, в худшем - m
+            if (!currVertices[graph.edges.get(i).inc1]){ //если первая инцидентная ребру вершина еще не была добавлена, добавляем в множество текущих вершин
+                currVertices[graph.edges.get(i).inc1] = true; 
                 countOfVertices++;
             }
-            if (!currVertices[graph.edges.get(i).inc2]){
+            if (!currVertices[graph.edges.get(i).inc2]){ //если вторая инцидентная ребру вершина еще не была добавлена, добавляем в множество текущих вершин
                 currVertices[graph.edges.get(i).inc2] = true;
                 countOfVertices++;
             }
-            if (m < countOfVertices - 1){
+            if (m < countOfVertices - 1){ //если текущее число ребер меньше n-1, то мы можем его добавить, так как цикл не образуется
                 ostov.edges.add(graph.edges.get(i));
                 m++;
             }
@@ -50,8 +50,8 @@ public class KraskalAlgorithm {
 
         long end = System.nanoTime();
 
-        timeOfExecutingNanoSeconds = end - start;
-        iterations = MergeSort.iterations + i;
+        timeOfExecutingNanoSeconds = end - start; //считаем время
+        iterations = MergeSort.iterations + i; //считаем итерации
         return ostov;
     }
 
