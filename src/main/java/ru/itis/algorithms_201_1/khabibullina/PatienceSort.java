@@ -1,4 +1,4 @@
-package org.example;
+package ru.itis.algorithms_201_1.khabibullina;
 
 import java.io.File;
 import java.io.FileReader;
