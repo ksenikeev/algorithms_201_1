@@ -3,8 +3,7 @@ package ru.itis.algorithms_201_1.asadullin;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import static term2.AaDS.SemesterWork.GraphGenerator.getRandomInt;
+import static ru.itis.algorithms_201_1.asadullin.GraphGenerator.getRandomInt;
 
 public class GraphGenerating {
     public static void main(String[] args) throws IOException {

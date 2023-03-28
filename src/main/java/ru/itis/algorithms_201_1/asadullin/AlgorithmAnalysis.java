@@ -3,9 +3,8 @@ package ru.itis.algorithms_201_1.asadullin;
 import java.io.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
-
-import static term2.AaDS.SemesterWork.FloydWarshallAlgorithm.floydWarshall;
-import static term2.AaDS.SemesterWork.GraphGenerator.graphToString;
+import static ru.itis.algorithms_201_1.asadullin.FloydWarshallAlgorithm.floydWarshall;
+import static ru.itis.algorithms_201_1.asadullin.GraphGenerator.graphToString;
 
 public class AlgorithmAnalysis {
     public static void main(String[] args) throws IOException {
