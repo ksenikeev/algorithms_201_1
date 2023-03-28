@@ -1,4 +1,4 @@
-package ASD.testsForRadixSort;
+package ru.itis.algorithms_201_1.solopov;
 
 import java.io.File;
 import java.io.FileWriter;
